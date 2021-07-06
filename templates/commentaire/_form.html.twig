@@ -1,0 +1,13 @@
+{{ form_start(form, {'action': path('commentaire_new', {id: id}), 'method': 'POST'}) }}
+<div class="row form-group">
+	<div class="col">
+		{{form_widget(form.text, {
+				'attr':{'placeholder': 'Votre commentaire', 'class' : 'form-control'}})}}
+	</div>
+	{{form_widget(form.nombre_votes,{ 'value' : 0})}}
+	{{form_widget(form.patient)}}
+	{{form_widget(form.maladie)}}
+</div>
+<br>
+<button class="btn btn-primary">{{ button_label|default('Ajouter commentaire') }}</button>
+{{ form_end(form) }}

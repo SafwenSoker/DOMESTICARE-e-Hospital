@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Se Connecter
+{% endblock %}
+
+{% block body %}
+	<br>
+	<br>
+	<br>
+	<div class="card border-secondary mb-3 mx-auto" style="max-width: 30rem;">
+		<div class="card-header">Espace Patient | Se connecter</div>
+		<div class="card-body">
+			<div class="text-center">
+				<img src="{{asset('Images/glogo.png')}}" width="150">
+			</div>
+			<br><br>
+			<form method="post">
+				{% if error %}
+					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+				<input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" autocomplete="email" placeholder="Entrer votre email" required autofocus>
+				<br>
+				<input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" placeholder="Entrer votre mot de passe" required>
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<br>
+				<button class="btn btn-primary" type="submit">
+					Se connecter
+				</button>
+			</form>
+			<hr>
+			<figure class="text-center">
+				<blockquote>
+					<p class="mb-0">Vous n'avez pas un compte ?</p>
+				</blockquote>
+				<figcaption class="blockquote-footer">
+					<a href="{{path('compte_patient_inscription')}}" style="text-decoration: none;">
+						<cite title="Source Title">S'inscrire!</cite>
+					</a>
+				</figcaption>
+			</figure>
+		</div>
+	</div>
+
+{% endblock %}

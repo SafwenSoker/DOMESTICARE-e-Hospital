@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ThankYouController!
+{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{asset('Assets/thankyou.css')}}">
+	{{parent()}}
+
+{% endblock %}
+
+{% block body %}
+
+	<body>
+		<img src="{{asset('Images/Hopital/1111.jpg')}}">
+		<figure class="text-center">
+			<figcaption class="blockquote-footer">
+				<h1>
+					<cite title="Source Title">Merci Pour votre patience et votre soutenance</cite>
+				</h1>
+			</figcaption>
+		</figure>
+	</body>
+{% endblock %}

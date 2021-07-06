@@ -1,0 +1,60 @@
+security:
+    encoders:
+        App\Entity\ComptePatient:
+            algorithm: bcrypt
+        App\Entity\CompteMedecin:
+            algorithm: bcrypt
+
+ 
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        compte_medecin_provider:
+            entity:
+                class: App\Entity\CompteMedecin
+                property: email
+        compte_patient_provider:
+            entity:
+                class: App\Entity\ComptePatient
+                property: email
+        
+    firewalls:
+        medecin_firewall:
+            anonymous: true
+            pattern: ^/medecin|(compte/medecin)|(meetings)|(maladie/medecin/maladie)
+            provider: compte_medecin_provider
+            guard: 
+                authenticators:
+                    - App\Security\CompteMedecinAuthenticator
+            form_login:
+                login_path: compte_medecin_connecter
+                check_path: compte_medecin_connecter
+                default_target_path: medecin_index
+                failure_path: compte_medecin_connecter
+            logout: 
+                path: compte_medecin_deconnecter
+                target: hopital_index
+        patient_firewall:
+            anonymous: true
+            pattern: ^/patient|(compte/patient)|(/demande/r/v/show)|(/maladie/patient/maladie)|(commentaire/new)|message|send|recieved|read|sent|consultations|(maladie/show)
+            provider: compte_patient_provider
+            guard: 
+                authenticators:
+                    - App\Security\ComptePatientAuthenticator
+            form_login:
+                login_path: compte_patient_connecter
+                check_path: compte_patient_connecter
+                default_target_path: patient_acceuil
+                failure_path: compte_patient_connecter
+            logout:
+                path: compte_patient_deconnecter
+                target: hopital_index
+    access_control:
+            - {path: '^/demande/r/v/show', roles: ROLE_PATIENT}
+            - {path: '^/medecin', roles: ROLE_MEDECIN }
+            - {path: '^/patient', roles: ROLE_PATIENT }
+            - {path : '^/' , roles: PUBLIC_ACCESS }
+            
+            
+
+        

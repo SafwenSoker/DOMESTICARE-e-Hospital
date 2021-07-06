@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+{% block body %}
+	{% if is_granted('ROLE_PATIENT') %}
+		{% include "shared/patient/navbar.html.twig" %}
+	{% else %}
+		{% include "shared/navbar.html.twig" %}
+	{% endif %}
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<div class="container">
+		<br><br><br>
+		{% for maladie in maladies %}
+			<div class="row">
+				<div class="col">
+					<div class="card mb-3">
+						<a href="{{path('maladie_show', {'id': maladie.id})}}" style="text-decoration : none;">
+							<h3 class="card-header">{{maladie.nom}}</h3>
+
+							<img src={{maladie.photo}} alt="" height="400" width="550"></a>
+					</div>
+				</div>
+				<div class="col card mb-3">
+					<ul class="nav nav-tabs">
+						<li class="nav-item">
+							<a class="nav-link active info" data-toggle="tab" href="#cause{{maladie.id}}">Causes</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link info" data-toggle="tab" href="#symptome{{maladie.id}}">Symptomes</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link info" data-toggle="tab" href="#recouvrement{{maladie.id}}">Traitement</a>
+						</li>
+					</ul>
+					<div id="myTabContent" class="tab-content">
+						<div class="tab-pane active" id="cause{{maladie.id}}">
+							<p>{{maladie.getCause()}}</p>
+						</div>
+						<div class="tab-pane" id="symptome{{maladie.id}}">
+							<p>{{maladie.getSymptome()}}</p>
+						</div>
+						<div class="tab-pane " id="recouvrement{{maladie.id}}">
+							<p>{{maladie.getTraitement()}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<div class="text-center">
+		{% if is_granted('ROLE_PATIENT') %}
+			<a class="nav-link" href="#navbarpatient">
+				<i class="fas fa-angle-up fa-7x"></i>
+			</a>
+		{% else %}
+			<a class="nav-link" href="#navbarhome">
+				<i class="fas fa-angle-up fa-7x"></i>
+			</a>
+		{% endif %}
+		{{ render(path('hopital_footer')) }}
+	</div>
+{% endblock %}

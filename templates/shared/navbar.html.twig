@@ -1,0 +1,92 @@
+<link rel="stylesheet" href="{{asset("Assets/background.css")}}">
+<link rel="stylesheet" href="{{asset("Assets/dropdown.css")}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-xs" id="navbarhome">
+
+	<a href="{{path('hopital_index')}}">
+		<img src="{{asset('Images/plogo.png')}}" width="140">
+	</a>
+	<ul style="text-align : center">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</ul>
+	<div class="collapse navbar-collapse" id="navbarColor01">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="#maladies">Maladies</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#protection">Protection</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#nosservices">Nos Services</a>
+			</li>
+			<li class="nav-item">
+				<a href="#SoyezSaine" class="nav-link">Soyez Saine</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#apropos">A Propos</a>
+			</li>
+		</ul>
+		<ul class="navbar-nav ms-auto">
+			{% if is_granted('ROLE_PATIENT') %}
+				<li>
+					<a href="{{ path('compte_patient_deconnecter') }}">
+						<button type="button" class="btn btn-primary btn-two my-2 my-sm-0 buttonAnimated mr-auto">Deconnecter</button>
+					</a>
+				</li>
+			{% elseif is_granted('ROLE_MEDECIN')%}
+				<li>
+					<a href="{{ path('compte_medecin_deconnecter') }}">
+						<button type="button" class="btn btn-primary btn-two my-2 my-sm-0 buttonAnimated">DECONNECTER</button>
+					</a>
+				</li>
+			{% else %}
+				<li class="nav-item dropdown">
+					<button type="button" class="nav-link btn btn-secondary btn-one my-2 my-sm-0 buttonAnimated" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Vos espaces ᐅ
+					</button>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<figure class="text-center">
+							<blockquote class="blockquote">
+								<p class="mb-0">Patient</p>
+							</blockquote>
+							<figcaption class="blockquote-footer">
+								<a href="{{path('compte_patient_connecter')}}">
+									<cite title="Source Title">Se Connecter</cite>
+								</a>
+							</figcaption>
+							<p class="mb-0">Vous n'avez pas de compte?</p><br>
+							<figcaption class="blockquote-footer">
+								<a href="{{path('compte_patient_inscription')}}">
+									<cite title="Source Title">S'inscrire</cite>
+								</a>
+							</figcaption>
+							<div>
+								<hr style="width: 10rem;">
+							</div>
+							<blockquote class="blockquote">
+								<p class="mb-0">Medecin</p>
+							</blockquote>
+							<figcaption class="blockquote-footer">
+								<a href="{{path('compte_medecin_connecter')}}">
+									<cite title="Source Title">Se Connecter</cite>
+								</a>
+							</figcaption>
+						</figure>
+					</div>
+				</li>
+				<li>
+					<a href="{{path('compte_patient_connecter')}}">
+						<button type="button" class="btn btn-primary btn-one my-2 my-sm-0 buttonAnimated">Patient</button>
+					</a>
+				</li>
+				<li>
+					<a href="{{path('compte_medecin_connecter')}}">
+						<button type="button" class="btn btn-primary btn-one my-2 my-sm-0 buttonAnimated">Médecin</button>
+					</a>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+</nav>

@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Maladie index
+{% endblock %}
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+
+{% block javascripts %}
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+$('#example').DataTable();
+});
+	</script>
+{% endblock %}
+
+
+{% block body %}
+	{% include "shared/medecin/navbar.html.twig" %}
+	<br>
+	<br>
+	<br>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+	<table id="example" class="table table-striped table-bordered myDataTable" style="width:100%">
+		<thead>
+			<tr>
+				<th style="width: 15rem;">Nom Maladie</th>
+				<th>Detail maladie</th>
+				<th style="width: 16rem;">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for maladie in maladies %}
+				<tr>
+					<td>{{maladie.nom}}</td>
+					<td>
+						<div class="card mb-3">
+							<div class="col">
+								<ul class="nav nav-tabs">
+									<li class="nav-item">
+										<a class="nav-link active info" data-toggle="tab" href="#cause{{maladie.id}}">Causes</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link info" data-toggle="tab" href="#symptome{{maladie.id}}">Symptomes</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link info" data-toggle="tab" href="#recouvrement{{maladie.id}}">Traitement</a>
+									</li>
+								</ul>
+								<div id="myTabContent" class="tab-content">
+									<div class="tab-pane active" id="cause{{maladie.id}}">
+										<p>{{maladie.getCause()}}</p>
+									</div>
+									<div class="tab-pane " id="symptome{{maladie.id}}">
+										<p>{{maladie.getSymptome()}}</p>
+									</div>
+									<div class="tab-pane " id="recouvrement{{maladie.id}}">
+										<p>{{maladie.getTraitement()}}</p>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</td>
+					<td>
+						<a href="{{path('maladie_edit', {'id' : maladie.getId()})}}" style="text-decoration: none;">
+							<button type="button" class="btn btn-outline-secondary">Modifier</button>
+						</a>
+						<a href="{{path('maladie_delete', {'id' : maladie.getId()})}}" style="text-decoration: none;">
+							<button type="button" class="btn btn-outline-danger">Supprimer</button>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

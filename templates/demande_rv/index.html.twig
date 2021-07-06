@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DemandeRV index{% endblock %}
+
+{% block body %}
+    <h1>DemandeRV index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for demande_r_v in demande_r_vs %}
+            <tr>
+                <td>{{ demande_r_v.id }}</td>
+                <td>
+                    <a href="{{ path('demande_r_v_show', {'id': demande_r_v.id}) }}">show</a>
+                    <a href="{{ path('demande_r_v_edit', {'id': demande_r_v.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('demande_r_v_new') }}">Create new</a>
+{% endblock %}

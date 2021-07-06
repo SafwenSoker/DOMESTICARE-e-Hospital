@@ -1,0 +1,81 @@
+{% extends 'patient/index.html.twig' %}
+
+{% block title %}New DemandeRV
+{% endblock %}
+
+{% block body %}
+
+	<html>
+		<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<meta charset="utf-8">
+			<link rel="icon" type="image/png" href="…">
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+			<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+			<link rel="stylesheet" type="text/css" href="{{asset('Assets/style.css')}}">
+		</head>
+		<body>
+			<div><img src="https://www.seanet.com/~owenmp/hvd-web/play-aids/grid-lg.gif" class="pixel-grid"/></div>
+			<div>
+				<i id="toggle-grid" class="fa fa-th"></i>
+			</div>
+			{% include "shared/patient/navbar.html.twig" %}
+			<br><br><br>
+			<div class="container-fluid main-cont">
+				<div class="container">
+					<blockquote class="blockquote">
+						<p class="mb-0">Liste des médecins</p>
+					</blockquote>
+				</div>
+				<div class="row news-row">
+					<div class="container-fluid col-md-12 col-sm-6 justify-content-center news-block">
+						<div class="card-group">
+							{% for medecin in medecins %}
+								<div class="underlay">
+									<div class="card">
+										<div class="card-img-top" style="background-image: url({{medecin.photo}})"></div>
+										<div class="card-block">
+											<h5 class="card-title">
+												<em>{{medecin.nom}}</em>
+												<hr>
+											</h5>
+											<p class="card-text">Numéro téléphone :
+												{{medecin.getNumeroTelephone()}}
+												Adresse :
+												{{medecin.adresse}}
+											</p>
+											<div class="row">
+												<div class="col">
+													<a href="{{path('nouveau_demande', {medecin : medecin.id, patient : app.user.patient.id})}}">
+														<button type="button" class="btn btn-outline-secondary">Demander</button>
+													</a>
+												</div>
+												<div class="col">
+													<button type="button" class="btn btn-outline-secondary">Contacter</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</body>
+		</body>
+	</html>
+</div><!------------------------><!--=======Scripts======--><script src="{{asset('JS/jquery-3.1.1.min.js')}}"></script>
+<script name="toggle-grid" type="text/javascript">
+	$(document).ready(function () {
+$(document).on("keypress", function (event) { // If 'alt + g' keys are pressed:
+if (event.which === 169) {
+$('#toggle-grid').toggle();
+}
+});
+
+$('#toggle-grid').on("click", function () {
+$('.pixel-grid').toggle();
+$('#toggle-grid').toggleClass('orange');
+});
+});
+</script></body></html>{% endblock %}

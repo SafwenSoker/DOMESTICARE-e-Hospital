@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{% include "shared/patient/navbar.html.twig" %}
+	<br>
+	<br><br>
+	<div class="container">
+		<div class="card text-white bg-primary mb-3" style="max-width: 20.5rem;">
+			<div class="card-header">
+				<p>Message de
+					{{message.sender.nom}}
+					{{message.sender.prenom}}
+					|
+					<img src="{{message.sender.photo}}">
+				</p>
+			</div>
+			<div class="card-body">
+				<h4 class="card-title">{{message.title}}</h4>
+				<div class="card-text">{{message.message}}</div>
+				<p>{{message.createdAt|date}}</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<a href="{{path("recieved")}}" class="btn btn-primary">Retour à la boite de recepetion</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

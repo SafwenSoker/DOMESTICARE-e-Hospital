@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block body %}
+	<div class="card border-secondary mb-3 mx-auto" style="max-width: 30rem;">
+		<div class="card-header">Espace Médecin | Se Connecter</div>
+		<div class="card-body">
+			<div class="text-center">
+				<img src="{{asset('Images/glogo.png')}}" width="150">
+			</div>
+			<br>
+			<form action="{{path('compte_medecin_connecter')}}" method="post">
+				{% if error %}
+					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+
+				{% if app.user %}
+					<div class="mb-3">
+						You are logged in as
+						{{ app.user.username }},
+						<a href="{{ path('compte_medecin_deconnecter') }}">Logout</a>
+					</div>
+				{% endif %}
+				<input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" autocomplete="email" placeholder="Entrer votre email" required autofocus>
+				<br>
+				<input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" placeholder="Entrer votre mot de passe" required>
+
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<br>
+				<button class="btn btn-primary" type="submit">
+					Se Connecter
+				</button>
+			</form>
+
+		</div>
+	</div>
+
+{% endblock %}

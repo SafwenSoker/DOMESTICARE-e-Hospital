@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{% include "shared/patient/navbar.html.twig" %}
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="container mr-autos">
+		<div class="row">
+			<div class="col">
+				<h1>Messagerie</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<h4>Résumé de la messagerie</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p class="lead">Reçus :
+					{{app.user.patient.recieved|length}}</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p class="lead">Envoyés :
+					{{app.user.patient.sent|length}}</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<a href="{{path("send")}}" class="btn btn-primary">Envoyer un message</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

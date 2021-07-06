@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace Medecin
+{% endblock %}
+
+{% block body %}
+	<style>
+		body {
+			background-image: url('{{asset('Images/Hopital/4(1).jpg')}}');
+			background-attachment: scroll;
+		}
+	</style>
+	{% include "shared/medecin/navbar.html.twig" %}
+	<br>
+	<br>
+	<br>
+
+	<div class="container">
+		<h1>
+			<p class="mb-0">Salut,
+				<cite title="Source Title">{{app.user.medecin.nom}}</cite>
+			</p>
+		</h1>
+		<div class="row">
+			<div class="col">
+				<figure>
+					<br><br>
+					<h3>
+						<figcaption class="blockquote-footer">
+							EN TANT QUE MÉDECIN
+							<br>
+							<br>
+							VOUS DEVEZ TOUJOURS CONSULTER VOS DEMANDES INBOX
+							<br>
+							<br>
+							NE MANQUEZ PAS VOS CONSULTATIONS
+							<br>
+							<br>
+							ET RESTEZ EN CONTACT AVEC VOS PATIENTS
+						</figcaption>
+					</h3>
+				</div>
+				<div class="col">
+					<section class="">
+						<div class="row d-flex justify-content-center">
+							<div class="col-lg-6" style="width:38rem;">
+								<div class="ratio ratio-16x9">
+									<iframe class="shadow-1-strong rounded" src="{{asset('video_medecin.webm')}}" title="YouTube video" allowfullscreen></iframe>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</figure>
+{% endblock %}

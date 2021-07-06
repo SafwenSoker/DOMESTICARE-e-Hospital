@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<br>
+		<br>
+		<div class="card border-secondary mb-3 mx-auto" style="max-width: 30rem;">
+			<div class="card-header">S'inscrire</div>
+			<div class="card-body">
+				<div class="text-center">
+					<img src="{{asset('Images/glogo.png')}}" width="150">
+				</div>
+				<br>
+				{% for flashError in app.flashes('verify_email_error') %}
+					<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+				{% endfor %}
+				{{ form_start(registrationForm) }}
+				<div class="row form-group">
+					<div class="col">{{form_widget(registrationForm.patient.nom, {
+				'attr':{'placeholder': 'Entrer votre nom', 'class' : 'form-control'}})}}</div>
+					<div class="col">{{form_widget(registrationForm.patient.prenom, {
+				'attr':{'placeholder': 'Entrer votre prenom', 'class' : 'form-control'}})}}</div>
+				</div>
+				<br>
+				<div class="row form-group">
+					<div class="col">{{ form_widget(registrationForm.email, {
+				'attr':{'placeholder': 'Entrer votre email', 'class' : 'form-control'}}) }}</div>
+				</div>
+				<br>
+				<div class="row form-group">
+					<div class="col">{{ form_widget(registrationForm.plainPassword, {
+			'attr':{'placeholder': 'Entrer votre mot de passe', 'class' : 'form-control'}}) }}</div>
+					<div class="col">{{ form_widget(registrationForm.confirm_password, {
+            'attr':{'placeholder': 'Confirmer Mot de passe', 'class' : 'form-control'}
+        }) }}</div>
+				</div>
+				<br>
+				<div class="row form-group">
+					<div class="col">{{form_widget(registrationForm.patient.cin, {
+				'attr':{'placeholder': 'Entrer votre CIN', 'class' : 'form-control'}})}}</div>
+					<div class="col">{{form_widget(registrationForm.patient.confirm_cin, {
+				'attr':{'placeholder': 'Confirmer votre CIN', 'class' : 'form-control'}})}}</div>
+				</div>
+				<br>
+				<div class="row form-group">
+					<div class="col">{{form_row(registrationForm.patient.photo, {'label': 'Choisir une photo', 'attr' : {'class':'form-control', 'type':'file' ,'id':'formFile'}})}}</div>
+				</div>
+				<br>
+				<div class="row form-group">
+					<div class="col">{{form_widget(registrationForm.patient.adresse, {'attr':{'placeholder': 'Entrer votre adresse locale', 'class' : 'form-control'}})}}</div>
+				</div>
+				<br>
+				<div class="row form-group">
+					<div class="col">{{form_widget(registrationForm.patient.numero_telephone, {'attr':{'placeholder': 'Entrer votre numero de telephone', 'class' : 'form-control'}})}}</div>
+				</div>
+				<br>
+				<div class="row form-group">
+					{{form_row(registrationForm.agreeTerms)}}
+				</div>
+				<br>
+				<button type="submit" class="btn btn btn-primary">S'inscrire</button>
+				{{ form_end(registrationForm) }}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

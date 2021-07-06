@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="{{asset("Assets/background.css")}}">
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-xs" id="navbarpatient">
+	<div class="collapse navbar-collapse" id="navbarColor01">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<div id="mySidenav" class="sidenav">
+					<div class="row">
+						<div class="col">
+							<a href="{{path("hopital_index")}}">
+								<img src="{{asset('Images/plogo.png')}}" width="200">
+							</a>
+						</div>
+					</div>
+					<a href="">Salut
+						{{app.user.patient.nom}}</a>
+					<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+					<hr>
+					<div class="row">
+						<a href="{{path('message')}}">
+							<h4>
+								Messagerie
+							</h4>
+						</a>
+					</div>
+					<div class="row">
+						<a href="{{path('recieved')}}">Boite de reception  ᐅ</a>
+					</div>
+					<div class="row">
+						<a href="{{path('sent')}}">Elements envoyés  ᐅ</a>
+					</div>
+				</div>
+				<a onmouseover="openNav()" href="{{path('hopital_index')}}" style="text-decoration: none;"><img src="{{asset('Images/plogo.png')}}" width="140"></span>
+			</li>
+			<li class="nav-item">
+				<a href="{{path('maladie_patient_index')}}" style="text-decoration:none;">Maladies</a>
+			</li>
+			<li class="nav-item">
+				<a href="{{path('demande_r_v_show')}}" style="text-decoration:none;">demandes</a>
+			</li>
+			<li class="nav-item">
+				<a href="{{path('message')}}" style="text-decoration:none;">messagerie</a>
+			</li>
+			<li class="nav-item">
+				<a href="{{path('consultations', {id : app.user.patient.id})}}" style="text-decoration:none;">Consultations</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" style="text-decoration:none;">Reglements</a>
+			</li>
+		</ul>
+		<ul class="navbar-nav ms-auto">
+			<li class="nav-item mr-auto">
+				{% if is_granted('ROLE_PATIENT') %}
+					<a href="{{ path('compte_patient_deconnecter') }}">
+						<button type="button" class="btn btn-primary btn-two my-2 my-sm-0 buttonAnimated mr-auto">Deconnecter</button>
+					</a>
+				{% else %}
+					<a href="{{ path('compte_patient_connecter') }}">
+						<button type="button" class="btn btn-primary btn-three my-2 my-sm-0 buttonAnimated">Connecter</button>
+					</a>
+				{% endif %}
+			</li>
+		</ul>
+	</div>
+</nav>

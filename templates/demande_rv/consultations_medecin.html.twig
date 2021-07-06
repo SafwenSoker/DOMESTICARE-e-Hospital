@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Maladie index
+{% endblock %}
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+
+{% block javascripts %}
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+$('#example').DataTable();
+});
+	</script>
+{% endblock %}
+
+
+{% block body %}
+	{% if is_granted('ROLE_PATIENT') %}
+
+		{% include "shared/patient/navbar.html.twig" %}
+	{% else %}
+		{% include "shared/medecin/navbar.html.twig" %}
+	{% endif %}
+	<div class="container">
+		<br>
+		<br>
+		<br>
+		<blockquote class="blockquote">
+			<p class="mb-0">Liste de vos consultations à venir</p>
+		</blockquote>
+		<figure class="text-center">
+
+			<style>
+				.example-wrapper {
+					margin: 1em auto;
+					max-width: 800px;
+					width: 95%;
+					font: 18px / 1.5 sans-serif;
+				}
+				.example-wrapper code {
+					background: #F5F5F5;
+					padding: 2px 6px;
+				}
+			</style>
+			<div class="container">
+				<table id="example" class="table table-striped table-bordered myDataTable" style="width:100%">
+					<thead>
+						<tr>
+							<th>Photo Patient</th>
+							<th>Nom</th>
+							<th>Prenom</th>
+							<th>Date de consultation</th>
+							<th style="width: 5rem;" colspan="2">Commencer</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for consultation in consultations %}
+							{% if consultation.getStartTime() |date == "now"|date %}
+								{% set disabled = "disabled" %}
+							{% else %}
+								{% set disabled = "" %}
+							{% endif %}
+							<tr>
+								<td><img src={{consultation.patient.photo}}></td>
+								<td>{{consultation.patient.nom}}</td>
+								<td>{{consultation.patient.prenom}}</td>
+								<td>{{consultation.getStartTime()|date}}</td>
+								<td>
+									<button type="button" class="btn btn-secondary">
+										<a href="{{consultation.getJoinUrl()}}">Allons-y</a>
+									</button>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</figure>
+{% endblock %}

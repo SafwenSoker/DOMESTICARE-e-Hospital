@@ -1,0 +1,95 @@
+<!-- Footer -->
+<footer
+	class="text-center text-lg-start bg-light text-muted" id="apropos">
+	<!-- Section: Social media -->
+	<section
+		class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+		<!-- Left -->
+		<div class="me-5 d-none d-lg-block">
+			<span>Soyez Connecté sur les résaux sociaux:</span>
+		</div>
+		<!-- Left -->
+
+		<!-- Right -->
+		<div>
+			<a href="https://www.facebook.com/Domesticare-103997648588600/?ref=pages_you_manage" class="me-4 text-reset">
+				<i class="fab fa-facebook-f"></i>
+			</a>
+		</div>
+		<!-- Right -->
+	</section>
+	<!-- Section: Social media -->
+
+	<!-- Section: Links  -->
+	<section class="">
+		<div
+			class="container text-center text-md-start mt-5">
+			<!-- Grid row -->
+			<div
+				class="row mt-3">
+				<!-- Grid column -->
+				<div
+					class="col-md-3 col-lg-4 mr-auto mb-4">
+					<!-- Content -->
+					<img src="{{asset('Images/glogo.png')}}" alt="">
+				</div>
+				<!-- Grid column -->
+
+				<!-- Grid column -->
+				<div
+					class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+					<!-- Links -->
+					<h6 class="text-uppercase fw-bold mb-4">
+						Patient
+					</h6>
+					<p>
+						<a href="{{path('compte_patient_inscription')}}" class="text-reset">S'inscrire</a>
+					</p>
+					<p>
+						<a href="{{path('compte_patient_connecter')}}" class="text-reset">Se connecter</a>
+					</p>
+					<p>
+						<a href="{{path('demande_r_v_show')}}" class="text-reset">Se consulter</a>
+					</p>
+					<p>
+						<a href="{{path('maladie_patient_index')}}" class="text-reset">S'apprendre</a>
+					</p>
+				</div>
+				<!-- Grid column -->
+
+				<!-- Grid column -->
+				<div
+					class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+					<!-- Links -->
+					<h6 class="text-uppercase fw-bold mb-4">
+						Contact
+					</h6>
+					<p>
+						<i class="fas fa-home me-3"></i>
+						{{hopital.adresse}}</p>
+					<p>
+						<i class="fas fa-envelope me-3"></i>
+						{{hopital.email}}
+					</p>
+					<p>
+						<i class="fas fa-phone me-3"></i>
+						{{hopital.tel}}</p>
+					<p>
+						<i class="fas fa-print me-3"></i>
+						{{hopital.fax}}</p>
+				</div>
+				<!-- Grid column -->
+			</div>
+			<!-- Grid row -->
+		</div>
+	</section>
+	<!-- Section: Links  -->
+
+	<!-- Copyright -->
+	<div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+		© 2021 Copyright:
+		<a class="text-reset fw-bold" href="{{path("thank_you")}}">Merci.com</a>
+	</div>
+	<!-- Copyright -->
+</footer>
+<!-- Footer -->

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}DOMESCTICARE
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			{#<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">#}
+			<link rel="stylesheet" href="{{asset("Assets/sidenav.css")}}">
+			<link rel="stylesheet" href="{{asset("Assets/bootstrap.min.css")}}">
+			<link rel="stylesheet" href="{{asset("Assets/animations.css")}}">
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Spartan&display=swap">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"/>
+		{% endblock %}
+		{% block javascripts %}
+			<script src="{{ asset('JS/sidenav.js') }}"></script>
+			<script src="{{ asset('JS/jqueryfunction.js') }}"></script>
+			<script src="{{ asset('JS/jquery-3.1.1.min.js') }}"></script>
+		{% endblock %}
+	</head>
+	<body>
+		{% block body %}
+			{% include "shared/navbar.html.twig" %}
+			{% for message in app.flashes("message") %}
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					{{message}}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+
+			{% endfor %}
+		{% endblock %}
+	</body>
+</html>

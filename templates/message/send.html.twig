@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{% include "shared/patient/navbar.html.twig" %}
+	<br>
+	<br>
+	<br>
+	<div class="container">
+		<div class="card border-dark mb-3" style="max-width: 80rem;">
+			<div class="card-header">
+				<h1 class="lead">Envoyer un message</h1>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col">
+
+						{{form_start(form)}}
+						<br>
+						{{form_widget(form.recipient)}}
+						<br>
+						{{form_widget(form.title,{
+				'attr':{'placeholder': 'Saisir le sujet', 'class' : 'form-control'}})}}
+						<br>
+						{{form_widget(form.message,{
+				'attr':{'placeholder': 'Ecrire votre message', 'class' : 'form-control'}})}}
+						<br>
+						<div class="col" style="width:10rem">
+							{{form_widget(form.envoyer, {
+				'attr':{'class' : 'btn btn-primary form-control'}})}}
+						</div>
+						{{form_end(form)}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

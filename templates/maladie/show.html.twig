@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{maladie.nom}}
+{% endblock %}
+
+{% block body %}
+	{% if is_granted('ROLE_PATIENT') %}
+		{% include "shared/patient/navbar.html.twig" %}
+	{% else %}
+		{% include "shared/navbar.html.twig" %}
+	{% endif %}
+	<br><br><br>
+	<div class="container">
+		<div class="q-container-show p-4">
+			<h1 class="display-4">{{ maladie.getNom()}}</h1>
+			<div class="q-display p-3">
+				<p class="lead">Petit definition du maladie !</p>
+			</div>
+		</div>
+		<br>
+		<div class="card mb-3">
+			<div class="row">
+				<div class="col">
+					<img src={{maladie.photo}} alt="" height="400" width="550">
+				</div>
+				<div class="col">
+					<ul class="nav nav-tabs">
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#cause">Causes</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#symptome">Symptomes</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#recouvrement">Traitement</a>
+						</li>
+					</ul>
+					<div id="myTabContent" class="tab-content">
+						<div class="tab-pane active" id="cause">
+							<p>{{maladie.getCause()}}</p>
+						</div>
+						<div class="tab-pane " id="symptome">
+							<p>{{maladie.getSymptome()}}</p>
+						</div>
+						<div class="tab-pane " id="recouvrement">
+							<p>{{maladie.getTraitement()}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			{{ render(path('commentaire_show', {id: maladie.id})) }}
+			{% if is_granted('ROLE_PATIENT') %}
+				{{ render(path('commentaire_new', {id : maladie.id })) }}
+			{% endif %}
+		</div>
+	</div>
+	<br><br>
+	{{ render(path('hopital_footer')) }}
+{% endblock %}
+{% block javascripts %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{asset("Assets/app.css")}}">
+{% endblock %}

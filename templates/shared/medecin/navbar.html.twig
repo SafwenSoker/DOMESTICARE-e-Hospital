@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="{{asset("Assets/background.css")}}">
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-xs">
+	<div class="collapse navbar-collapse" id="navbarColor01">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('hopital_index')}}"><img src="{{asset('Images/plogo.png')}}" width="110"></a>
+			</li>
+			<li class="nav-item">{#<a class="nav-link" href="{{path('consultation_index')}}">Rendez-Vous</a>#}</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('maladie_medecin_index')}}">Maladies</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('demande_rv_medecin', {"id" : app.user.medecin.id })}}">Demandes</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{path('meetings', {id: app.user.medecin.id})}}">Consultations</a>
+			</li>
+		</ul>
+		<ul class="navbar-nav ms-auto">
+			<li class="nav-item mr-auto">
+				{% if is_granted('ROLE_MEDECIN') %}
+					<a href="{{ path('compte_medecin_deconnecter') }}">
+						<button type="button" class="btn btn-primary btn-two my-2 my-sm-0 buttonAnimated mr-auto">Deconnecter</button>
+					</a>
+				{% else %}
+					<a href="{{ path('compte_medecin_connecter') }}">
+						<button type="button" class="btn btn-primary btn-three my-2 my-sm-0 buttonAnimated">Connecter</button>
+					</a>
+				{% endif %}
+			</li>
+		</ul>
+	</div>
+</nav>

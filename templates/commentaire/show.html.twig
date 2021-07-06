@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	{{parent()}}
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="{{asset('JS/question_show.js')}}">
+		var $container = $('js-vote-arrows');
+$container.find('vote-up').on('click', function (e) {
+e.preventDefault();
+
+var $link = $(e.currentTarget);
+console.log($container)
+
+$.ajax({
+url: '/commentaire/1/vote/' + $link.data('direction'),
+method: 'POST'
+
+}).then(function (data) {
+console.log(data.votes);
+$container.find('.js-vote-total').text(data.votes);
+});
+});
+	</script>
+
+{% endblock %}
+{% block body %}
+	<div class="container">
+		<br>
+		<h1>Réponses :
+		</h1>
+		{% for commentaire in commentaires %}
+			<div class="row">
+				<div class="col-12">
+					<div style="box-shadow: 2px 3px 9px 4px rgba(0,0,0,0.04);">
+						<div class="q-container-show p-4">
+							<div class="row">
+								<div class="col-2 text-center">
+									<img src="/images/tisha.png" width="100" height="100"><br><br>
+									<strong>--{{ commentaire.patient.nom|capitalize }}</strong>
+								</div>
+								<div class="col">
+									<h1 class="q-title-show">{{ commentaire.maladie.nom }}</h1>
+									<div class="q-display p-3">
+										{{ commentaire.text }}
+										<i class="fa fa-quote-left mr-3"></i>
+										<p class="d-inline"></p>
+										<p class="pt-4"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+		{% endfor %}
+	</div>
+{% endblock %}
