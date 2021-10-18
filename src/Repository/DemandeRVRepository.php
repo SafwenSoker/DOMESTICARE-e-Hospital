@@ -16,6 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class DemandeRVRepository extends ServiceEntityRepository
 {
     private $entityManager;
+
     public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -34,6 +35,7 @@ class DemandeRVRepository extends ServiceEntityRepository
 
         $query = $qb->getQuery();
         dump($query->execute());
+
         return $query->execute();
     }
 

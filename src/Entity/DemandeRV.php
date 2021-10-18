@@ -60,7 +60,8 @@ class DemandeRV
 
     public function __toString()
     {
-        $format = "DemandeRV (id: %s, patient: %s, medecin: %s)";
+        $format = 'DemandeRV (id: %s, patient: %s, medecin: %s)';
+
         return sprintf($format, $this->id, $this->patient, $this->medecin);
     }
 }

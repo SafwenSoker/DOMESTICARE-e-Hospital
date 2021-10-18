@@ -19,8 +19,7 @@ class MedecinType extends AbstractType
             ->add('matricule')
             ->add('adresse')
             ->add('photo')
-            ->add('compteMedecin')
-        ;
+            ->add('compteMedecin');
     }
 
     public function configureOptions(OptionsResolver $resolver)

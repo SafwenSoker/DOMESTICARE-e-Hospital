@@ -17,8 +17,7 @@ class MaladieType extends AbstractType
             ->add('photo')
             ->add('cause')
             ->add('symptome')
-            ->add('traitement')
-        ;
+            ->add('traitement');
     }
 
     public function configureOptions(OptionsResolver $resolver)

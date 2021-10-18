@@ -24,6 +24,7 @@ class MaladieController extends AbstractController
             'maladies' => $maladieRepository->findAll(),
         ]);
     }
+
     /**
      * @Route("/patient/maladie", name="maladie_patient_index", methods={"GET", "POST"})
      */
@@ -53,7 +54,7 @@ class MaladieController extends AbstractController
 
         return $this->render('maladie/new.html.twig', [
             'maladie' => $maladie,
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ]);
     }
 
@@ -83,7 +84,7 @@ class MaladieController extends AbstractController
 
         return $this->render('maladie/edit.html.twig', [
             'maladie' => $maladie,
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ]);
     }
 
@@ -92,7 +93,7 @@ class MaladieController extends AbstractController
      */
     public function delete(Request $request, Maladie $maladie): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $maladie->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$maladie->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($maladie);
             $entityManager->flush();

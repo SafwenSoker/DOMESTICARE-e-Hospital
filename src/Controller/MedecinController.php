@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Medecin;
-use App\Form\MedecinType;
 use App\Repository\DemandeRVRepository;
 use App\Repository\MedecinRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,8 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MedecinController extends AbstractController
 {
-
-
     /**
      * @Route("/", name="medecin_index", methods={"GET"})
      */
@@ -27,6 +23,7 @@ class MedecinController extends AbstractController
             'medecins' => $medecinRepository->findAll(),
         ]);
     }
+
     /**
      * @Route("/{id}", name="medecin_show", methods={"GET"})
      */
@@ -36,12 +33,14 @@ class MedecinController extends AbstractController
             'medecin' => $medecin,
         ]);
     }
+
     /**
      * @Route("/demande/{id}", name="demande_rv_medecin", methods={"GET","POST"})
      */
     public function DemandeRV(Medecin $medecin, DemandeRVRepository $demandeRVRepository): Response
     {
         $demandesRVs = $demandeRVRepository->findBy(['medecin' => $medecin->getId()]);
-        return $this->render("medecin/demanderv.html.twig", ["demandes" => $demandesRVs]);
+
+        return $this->render('medecin/demanderv.html.twig', ['demandes' => $demandesRVs]);
     }
 }

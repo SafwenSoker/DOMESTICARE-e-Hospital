@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\ComptePatientRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -43,6 +42,7 @@ class ComptePatient implements UserInterface
      */
     private $patient;
     public $confirm_password;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,9 +135,11 @@ class ComptePatient implements UserInterface
 
         return $this;
     }
+
     public function __toString()
     {
-        $format = "Compte Patient (id: %s, email: %s, password: %s, patient: %s)";
+        $format = 'Compte Patient (id: %s, email: %s, password: %s, patient: %s)';
+
         return sprintf($format, $this->id, $this->email, $this->password, $this->patient);
     }
 }

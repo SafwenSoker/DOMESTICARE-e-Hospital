@@ -2,15 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\DemandeRV;
 use App\Entity\Medecin;
 use App\Entity\Patient;
-use App\Entity\DemandeRV;
-use Symfony\Flex\ComposerRepository;
-use App\Repository\PatientRepository;
-use App\Repository\DemandeRVRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Medecin|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,9 +17,10 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class MedecinRepository extends ServiceEntityRepository
 {
-    private $rvs = array();
+    private $rvs = [];
     private $demandeRVRepository;
     private $entityManager;
+
     public function __construct(ManagerRegistry $registry, DemandeRVRepository $demandeRVRepository, EntityManagerInterface $entityManager)
     {
         $this->rvs[] = new DemandeRV();
@@ -36,7 +34,7 @@ class MedecinRepository extends ServiceEntityRepository
      */
     public function findMedecinByRV(Patient $patient): array
     {
-        $medecins = array();
+        $medecins = [];
         $rvs = $this->demandeRVRepository->findRVByPatient($patient->getId());
         foreach ($rvs as $m) {
             array_push($medecins, $m->getMedecin()->getId());
@@ -44,7 +42,7 @@ class MedecinRepository extends ServiceEntityRepository
         dump($medecins);
         $qb = $this->createQueryBuilder('m')
             ->where('m.id  NOT IN (:medecins)')
-            ->setParameters(['medecins' => array($medecins)]);
+            ->setParameters(['medecins' => [$medecins]]);
 
         $query = $qb->getQuery();
 

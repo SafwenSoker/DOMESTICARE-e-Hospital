@@ -14,8 +14,7 @@ class HopitalType extends AbstractType
         $builder
             ->add('nom')
             ->add('adresse')
-            ->add('tel')
-        ;
+            ->add('tel');
     }
 
     public function configureOptions(OptionsResolver $resolver)

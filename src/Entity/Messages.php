@@ -51,8 +51,9 @@ class Messages
 
     public function __construct()
     {
-        $this->created_at = new \DateTime;
+        $this->created_at = new \DateTime();
     }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -8,34 +8,35 @@ use UnexpectedValueException;
 
 /**
  * JSON Web Key implementation, based on this spec:
- * https://tools.ietf.org/html/draft-ietf-jose-json-web-key-41
+ * https://tools.ietf.org/html/draft-ietf-jose-json-web-key-41.
  *
  * PHP version 5
  *
  * @category Authentication
- * @package  Authentication_JWT
+ *
  * @author   Bui Sy Nguyen <nguyenbs@gmail.com>
  * @license  http://opensource.org/licenses/BSD-3-Clause 3-clause BSD
+ *
  * @link     https://github.com/firebase/php-jwt
  */
 class JWK
 {
     /**
-     * Parse a set of JWK keys
+     * Parse a set of JWK keys.
      *
      * @param array $jwks The JSON Web Key Set as an associative array
      *
-     * @return array An associative array that represents the set of keys
+     * @throws InvalidArgumentException Provided JWK Set is empty
+     * @throws UnexpectedValueException Provided JWK Set was invalid
+     * @throws DomainException          OpenSSL failure
      *
-     * @throws InvalidArgumentException     Provided JWK Set is empty
-     * @throws UnexpectedValueException     Provided JWK Set was invalid
-     * @throws DomainException              OpenSSL failure
+     * @return array An associative array that represents the set of keys
      *
      * @uses parseKey
      */
     public static function parseKeySet(array $jwks)
     {
-        $keys = array();
+        $keys = [];
 
         if (!isset($jwks['keys'])) {
             throw new UnexpectedValueException('"keys" member must exist in the JWK Set');
@@ -59,15 +60,15 @@ class JWK
     }
 
     /**
-     * Parse a JWK key
+     * Parse a JWK key.
      *
      * @param array $jwk An individual JWK
      *
-     * @return resource|array An associative array that represents the key
+     * @throws InvalidArgumentException Provided JWK is empty
+     * @throws UnexpectedValueException Provided JWK was invalid
+     * @throws DomainException          OpenSSL failure
      *
-     * @throws InvalidArgumentException     Provided JWK is empty
-     * @throws UnexpectedValueException     Provided JWK was invalid
-     * @throws DomainException              OpenSSL failure
+     * @return resource|array An associative array that represents the key
      *
      * @uses createPemFromModulusAndExponent
      */
@@ -93,9 +94,10 @@ class JWK
                 $publicKey = \openssl_pkey_get_public($pem);
                 if (false === $publicKey) {
                     throw new DomainException(
-                        'OpenSSL error: ' . \openssl_error_string()
+                        'OpenSSL error: '.\openssl_error_string()
                     );
                 }
+
                 return $publicKey;
             default:
                 // Currently only RSA is supported
@@ -104,7 +106,7 @@ class JWK
     }
 
     /**
-     * Create a public key represented in PEM format from RSA modulus and exponent information
+     * Create a public key represented in PEM format from RSA modulus and exponent information.
      *
      * @param string $n The RSA modulus encoded in Base64
      * @param string $e The RSA exponent encoded in Base64
@@ -118,10 +120,10 @@ class JWK
         $modulus = JWT::urlsafeB64Decode($n);
         $publicExponent = JWT::urlsafeB64Decode($e);
 
-        $components = array(
-            'modulus' => \pack('Ca*a*', 2, self::encodeLength(\strlen($modulus)), $modulus),
-            'publicExponent' => \pack('Ca*a*', 2, self::encodeLength(\strlen($publicExponent)), $publicExponent)
-        );
+        $components = [
+            'modulus'        => \pack('Ca*a*', 2, self::encodeLength(\strlen($modulus)), $modulus),
+            'publicExponent' => \pack('Ca*a*', 2, self::encodeLength(\strlen($publicExponent)), $publicExponent),
+        ];
 
         $rsaPublicKey = \pack(
             'Ca*a*a*',
@@ -133,30 +135,31 @@ class JWK
 
         // sequence(oid(1.2.840.113549.1.1.1), null)) = rsaEncryption.
         $rsaOID = \pack('H*', '300d06092a864886f70d0101010500'); // hex version of MA0GCSqGSIb3DQEBAQUA
-        $rsaPublicKey = \chr(0) . $rsaPublicKey;
-        $rsaPublicKey = \chr(3) . self::encodeLength(\strlen($rsaPublicKey)) . $rsaPublicKey;
+        $rsaPublicKey = \chr(0).$rsaPublicKey;
+        $rsaPublicKey = \chr(3).self::encodeLength(\strlen($rsaPublicKey)).$rsaPublicKey;
 
         $rsaPublicKey = \pack(
             'Ca*a*',
             48,
-            self::encodeLength(\strlen($rsaOID . $rsaPublicKey)),
-            $rsaOID . $rsaPublicKey
+            self::encodeLength(\strlen($rsaOID.$rsaPublicKey)),
+            $rsaOID.$rsaPublicKey
         );
 
-        $rsaPublicKey = "-----BEGIN PUBLIC KEY-----\r\n" .
-            \chunk_split(\base64_encode($rsaPublicKey), 64) .
+        $rsaPublicKey = "-----BEGIN PUBLIC KEY-----\r\n".
+            \chunk_split(\base64_encode($rsaPublicKey), 64).
             '-----END PUBLIC KEY-----';
 
         return $rsaPublicKey;
     }
 
     /**
-     * DER-encode the length
+     * DER-encode the length.
      *
      * DER supports lengths up to (2**8)**127, however, we'll only support lengths up to (2**8)**4.  See
      * {@link http://itu.int/ITU-T/studygroups/com17/languages/X.690-0207.pdf#p=13 X.690 paragraph 8.1.3} for more information.
      *
      * @param int $length
+     *
      * @return string
      */
     private static function encodeLength($length)

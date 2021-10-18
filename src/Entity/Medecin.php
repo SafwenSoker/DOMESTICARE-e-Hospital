@@ -210,9 +210,11 @@ class Medecin
 
         return $this;
     }
+
     public function __toString()
     {
-        $format = "Patient (id: %s, nom: %s, prenom: %s)";
+        $format = 'Patient (id: %s, nom: %s, prenom: %s)';
+
         return sprintf($format, $this->id, $this->nom, $this->prenom);
     }
 

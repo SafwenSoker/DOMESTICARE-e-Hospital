@@ -2,35 +2,27 @@
 
 namespace App\Controller;
 
-use DateTime;
-use DateTimeInterface;
 use App\Entity\Medecin;
 use App\Entity\Meeting;
 use App\Entity\Patient;
-use App\Service\MeetingGenerator;
-use App\Repository\MedecinRepository;
 use App\Repository\MeetingRepository;
 use App\Repository\PatientRepository;
-use App\Repository\CompteMedecinRepository;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
+use App\Service\MeetingGenerator;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Validator\Constraints\Json;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\Encoder\JsonDecode;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MeetingController extends AbstractController
 {
     private $meetingRepository;
     private $patientRepository;
+
     public function __construct(MeetingRepository $meetingRepository, PatientRepository $patientRepository)
     {
         $this->meetingRepository = $meetingRepository;
         $this->patientRepository = $patientRepository;
     }
+
     /**
      * @Route("/meeting/{patient}/{medecin}", name="generate_meeting")
      */
@@ -38,8 +30,8 @@ class MeetingController extends AbstractController
     {
         $meeting = new Meeting();
         if ($patient != null && $medecin != null) {
-            dump($meeting_data = array($meetingGenerator->generateMeeting()));
-            $data = array($meeting_data[0]);
+            dump($meeting_data = [$meetingGenerator->generateMeeting()]);
+            $data = [$meeting_data[0]];
             $meeting->setMedecin($medecin);
             $meeting->setTopic($data[0]->topic);
             $meeting->setPatient($patient);
@@ -61,9 +53,11 @@ class MeetingController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($meeting);
             $em->flush();
-            return $this->redirectToRoute("demande_rv_medecin", ["id" => $medecin->getId()]);
+
+            return $this->redirectToRoute('demande_rv_medecin', ['id' => $medecin->getId()]);
         }
-        return $this->redirectToRoute("demande_rv_medecin", ["id" => $medecin->getId()]);
+
+        return $this->redirectToRoute('demande_rv_medecin', ['id' => $medecin->getId()]);
     }
 
     /**
@@ -72,10 +66,11 @@ class MeetingController extends AbstractController
     public function showConsultations(Patient $patient)
     {
         $patient = $this->patientRepository->find($patient->getId());
+
         return $this->render(
-            "demande_rv/consultations_patient.html.twig",
+            'demande_rv/consultations_patient.html.twig',
             [
-                "consultations" => $this->meetingRepository->findBy(['patient' => $patient->getId()])
+                'consultations' => $this->meetingRepository->findBy(['patient' => $patient->getId()]),
             ]
         );
     }
@@ -86,9 +81,9 @@ class MeetingController extends AbstractController
     public function showMeetings(Medecin $medecin)
     {
         return $this->render(
-            "demande_rv/consultations_medecin.html.twig",
+            'demande_rv/consultations_medecin.html.twig',
             [
-                "consultations" => $this->meetingRepository->findBy(['medecin' => $medecin->getId()])
+                'consultations' => $this->meetingRepository->findBy(['medecin' => $medecin->getId()]),
             ]
         );
     }

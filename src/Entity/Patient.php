@@ -79,6 +79,7 @@ class Patient
      * @ORM\OneToMany(targetEntity=Meeting::class, mappedBy="patient", orphanRemoval=true)
      */
     private $meetings;
+
     public function __construct()
     {
         $this->demandeRVs = new ArrayCollection();
@@ -241,9 +242,11 @@ class Patient
 
         return $this;
     }
+
     public function __toString()
     {
-        $format = "Patient :  %s %s | adresse: %s | numéro téléphone: %s ";
+        $format = 'Patient :  %s %s | adresse: %s | numéro téléphone: %s ';
+
         return sprintf($format, $this->nom, $this->prenom, $this->adresse, $this->numero_telephone);
     }
 

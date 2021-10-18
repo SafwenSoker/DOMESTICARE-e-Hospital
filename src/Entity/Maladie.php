@@ -165,9 +165,11 @@ class Maladie
 
         return $this;
     }
+
     public function __toString()
     {
-        $format = "Maladie (id: %s, nom: %s, slug: %s)";
+        $format = 'Maladie (id: %s, nom: %s, slug: %s)';
+
         return sprintf($format, $this->id, $this->nom, $this->slug);
     }
 }

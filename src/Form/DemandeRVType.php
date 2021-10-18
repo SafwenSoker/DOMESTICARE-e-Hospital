@@ -13,8 +13,7 @@ class DemandeRVType extends AbstractType
     {
         $builder
             ->add('patient')
-            ->add('medecin')
-        ;
+            ->add('medecin');
     }
 
     public function configureOptions(OptionsResolver $resolver)

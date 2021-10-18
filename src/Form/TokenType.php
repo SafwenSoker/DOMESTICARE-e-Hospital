@@ -12,8 +12,7 @@ class TokenType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('access_token')
-        ;
+            ->add('access_token');
     }
 
     public function configureOptions(OptionsResolver $resolver)

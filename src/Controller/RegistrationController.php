@@ -2,27 +2,28 @@
 
 namespace App\Controller;
 
-use App\Entity\Patient;
 use App\Entity\ComptePatient;
+use App\Entity\Patient;
 use App\Form\RegistrationFormType;
 use App\Security\ComptePatientAuthenticator;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\SecurityEvents;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Http\SecurityEvents;
 
 class RegistrationController extends AbstractController
 {
     private $tokenStorage;
     private $eventDispatcher;
+
     /**
      * @Route("/compte/patient/inscription", name="compte_patient_inscription")
      */
@@ -53,7 +54,8 @@ class RegistrationController extends AbstractController
             $this->tokenStorage->setToken($token);
             $event = new InteractiveLoginEvent($request, $token);
             $this->eventDispatcher->dispatch($event, SecurityEvents::INTERACTIVE_LOGIN);
-            return $this->render('patient/index.html.twig', ["comptepatient" => $user]);
+
+            return $this->render('patient/index.html.twig', ['comptepatient' => $user]);
         }
 
         return $this->render('registration/register.html.twig', [

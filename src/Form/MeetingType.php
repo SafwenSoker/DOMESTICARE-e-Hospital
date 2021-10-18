@@ -25,8 +25,7 @@ class MeetingType extends AbstractType
             ->add('password')
             ->add('h323_password')
             ->add('pstn_password')
-            ->add('encrypted_password')
-        ;
+            ->add('encrypted_password');
     }
 
     public function configureOptions(OptionsResolver $resolver)

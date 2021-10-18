@@ -2,22 +2,19 @@
 
 namespace App\Controller;
 
-use App\Entity\ComptePatient;
+use App\Entity\DemandeRV;
 use App\Entity\Medecin;
 use App\Entity\Patient;
-use App\Entity\DemandeRV;
 use App\Form\DemandeRVType;
 use App\Repository\ComptePatientRepository;
+use App\Repository\DemandeRVRepository;
 use App\Repository\MedecinRepository;
 use App\Repository\PatientRepository;
-use App\Repository\DemandeRVRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Http\SecurityEvents;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/demande/r/v")
@@ -26,6 +23,7 @@ class DemandeRVController extends AbstractController
 {
     private $security;
     private $demandeRVRepository;
+
     public function __construct(Security $security, DemandeRVRepository $demandeRVRepository)
     {
         $this->demandeRVRepository = $demandeRVRepository;
@@ -53,6 +51,7 @@ class DemandeRVController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($demandeRV);
         $entityManager->flush();
+
         return $this->redirectToRoute('demande_r_v_show');
     }
 
@@ -66,9 +65,10 @@ class DemandeRVController extends AbstractController
         $patient = $patientRepository->findOneBy(['id' => $comptepatient->getPatient()->getId()]);
         $medecinDisponibles = $medecinRepository->findMedecinByRV($patient);
         dump($medecinDisponibles);
+
         return $this->render('demande_rv/show.html.twig', [
-            'medecins' => $medecinDisponibles,
-            'comptepatient' => $this->security->getUser()
+            'medecins'      => $medecinDisponibles,
+            'comptepatient' => $this->security->getUser(),
         ]);
     }
 
@@ -88,7 +88,7 @@ class DemandeRVController extends AbstractController
 
         return $this->render('demande_rv/edit.html.twig', [
             'demande_r_v' => $demandeRV,
-            'form' => $form->createView(),
+            'form'        => $form->createView(),
         ]);
     }
 
@@ -97,7 +97,7 @@ class DemandeRVController extends AbstractController
      */
     public function delete(Request $request, DemandeRV $demandeRV): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $demandeRV->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$demandeRV->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($demandeRV);
             $entityManager->flush();
@@ -105,11 +105,12 @@ class DemandeRVController extends AbstractController
 
         return $this->redirectToRoute('demande_r_v_index');
     }
+
     /**
      * @Route("/getdr/{id}", name="demande_r_v_get", methods={"GET" , "POST"})
      */
     public function getRV(int $id): Response
     {
-        return $this->render("demande_rv/getRV.html.twig", ["demandes" => $this->demandeRVRepository->findRVByPatient($id)]);
+        return $this->render('demande_rv/getRV.html.twig', ['demandes' => $this->demandeRVRepository->findRVByPatient($id)]);
     }
 }

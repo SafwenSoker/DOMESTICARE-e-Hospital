@@ -4,14 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Patient;
 use App\Form\PatientType;
-use App\Entity\ComptePatient;
-use App\Repository\PatientRepository;
 use App\Repository\ComptePatientRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/patient")
@@ -19,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PatientController extends AbstractController
 {
     private $security;
+
     public function __construct(Security $security)
     {
         $this->security = $security;
@@ -30,9 +29,10 @@ class PatientController extends AbstractController
     public function index(ComptePatientRepository $comptepatientRepository): Response
     {
         dump($this->security->getUser());
+
         return $this->render('patient/index.html.twig', [
             'comptepatient' => $comptepatientRepository->findAll(),
-            'user' => $this->security->getUser()
+            'user'          => $this->security->getUser(),
         ]);
     }
 
@@ -62,7 +62,7 @@ class PatientController extends AbstractController
 
         return $this->render('patient/edit.html.twig', [
             'patient' => $patient,
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ]);
     }
 }

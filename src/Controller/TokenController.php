@@ -44,7 +44,7 @@ class TokenController extends AbstractController
 
         return $this->render('token/new.html.twig', [
             'token' => $token,
-            'form' => $form->createView(),
+            'form'  => $form->createView(),
         ]);
     }
 
@@ -74,7 +74,7 @@ class TokenController extends AbstractController
 
         return $this->render('token/edit.html.twig', [
             'token' => $token,
-            'form' => $form->createView(),
+            'form'  => $form->createView(),
         ]);
     }
 
